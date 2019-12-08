@@ -8,4 +8,15 @@ public final class Categories {
 
     private Categories() {
     }
+
+    public static Category getCategory(String name) {
+        Category found = registry.get(name);
+        if(found != null) {
+            return found;
+        }else {
+            Category newCategory = new Category(name);
+            registry.put(name,newCategory);
+            return newCategory;
+        }
+    }
 }

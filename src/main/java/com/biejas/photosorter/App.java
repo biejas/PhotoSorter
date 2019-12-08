@@ -8,7 +8,8 @@ public class App {
     public static void main(String[] args) {
         Sorter sorter;
         try {
-            sorter = new Sorter(new Scanner(new File("apikey.txt")).useDelimiter("\\Z").next(), "./test-sets/set1");
+            sorter = new Sorter(new Scanner(new File("apikey.txt")).useDelimiter("\\Z").next(), "./test-sets/set1", 40);
+            sorter.sort();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

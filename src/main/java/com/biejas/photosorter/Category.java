@@ -14,4 +14,8 @@ public class Category {
         related.add(c);
         return this;
     }
+
+    public String getName() {
+        return name;
+    }
 }

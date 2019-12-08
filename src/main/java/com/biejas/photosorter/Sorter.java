@@ -7,15 +7,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Sorter {
     private Indico indico;
     private final String dirPath;
     private final File dir;
     private final File[] photos;
+    private final List<CategorizedFile> categorizedPhotos = new ArrayList<>();
+    private final Integer threshold;
 
-    public Sorter(String apiKey, String dirPath) throws FileNotFoundException {
+    public Sorter(String apiKey, String dirPath, Integer threshold) throws FileNotFoundException {
+        this.threshold = threshold;
         try {
             this.indico = new Indico(apiKey);
         } catch (IndicoException e){
@@ -52,5 +57,14 @@ public class Sorter {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public void sort(){
+        for (File photo : photos){
+            System.out.println("Sorting started...");
+            CategorizedFile categorized = new CategorizedFile(photo);
+            categorized.categorize(indico, threshold);
+            categorizedPhotos.add(categorized);
+        }
     }
 }
