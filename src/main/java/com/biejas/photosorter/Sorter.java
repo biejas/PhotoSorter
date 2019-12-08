@@ -15,7 +15,7 @@ public class Sorter {
     private final List<CategorizedFile> categorizedPhotos = new ArrayList<>();
     private final Integer threshold;
 
-    public Sorter(String apiKey, String dirPath, Integer threshold) throws FileNotFoundException {
+    public Sorter(String dirPath, Integer threshold) throws FileNotFoundException {
         this.threshold = threshold;
         this.dirPath = dirPath;
         this.dir = new File(dirPath);
