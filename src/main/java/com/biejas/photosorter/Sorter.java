@@ -1,8 +1,5 @@
 package main.java.com.biejas.photosorter;
 
-import io.indico.Indico;
-import io.indico.api.utils.IndicoException;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,7 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Sorter {
-    private Indico indico;
     private final String dirPath;
     private final File dir;
     private final File[] photos;
@@ -21,11 +17,6 @@ public class Sorter {
 
     public Sorter(String apiKey, String dirPath, Integer threshold) throws FileNotFoundException {
         this.threshold = threshold;
-        try {
-            this.indico = new Indico(apiKey);
-        } catch (IndicoException e){
-            e.printStackTrace();
-        }
         this.dirPath = dirPath;
         this.dir = new File(dirPath);
 
@@ -63,7 +54,7 @@ public class Sorter {
         for (File photo : photos){
             System.out.println("Sorting started...");
             CategorizedFile categorized = new CategorizedFile(photo);
-            categorized.categorize(indico, threshold);
+            categorized.categorize(threshold);
             categorizedPhotos.add(categorized);
         }
     }
