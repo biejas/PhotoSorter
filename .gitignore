@@ -24,3 +24,11 @@ hs_err_pid*
 
 #IntelliJ project settings
 *.idea
+
+#API key
+**/apikey.txt
+
+**/.DS_Store
+
+#test photos sets folder
+**/test-sets
