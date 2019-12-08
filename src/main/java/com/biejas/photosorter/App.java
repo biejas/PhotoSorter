@@ -1,14 +1,12 @@
 package main.java.com.biejas.photosorter;
-
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
         Sorter sorter;
         try {
-            sorter = new Sorter(new Scanner(new File("apikey.txt")).useDelimiter("\\Z").next(), "./test-sets/set1");
+            sorter = new Sorter("./test-sets/set1", 40);
+            sorter.sort();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
