@@ -1,6 +1,9 @@
 package main.java.com.biejas.photosorter;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,9 +15,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import org.controlsfx.control.CheckComboBox;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class AppGUI extends Application {
@@ -28,9 +31,9 @@ public class AppGUI extends Application {
 
     private @FXML RadioButton others;
     private @FXML RadioButton inPlace;
-    private @FXML RadioButton bestFit;
 
     private @FXML VBox categories;
+    private @FXML CheckComboBox<Category> categoryBox;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -68,6 +71,18 @@ public class AppGUI extends Application {
 
     @FXML
     private void findsCategories(ActionEvent event){
+        ObservableList<Category> categoryObservableList = FXCollections.observableArrayList(); //podmien na wywolanie funkcji
+
+        categoryBox.getItems().addAll(categoryObservableList);
+
+        //Jak chcesz otrzymac zaznaczone boxy z listy
+        //Dwa sposoby i co zwrócą:
+
+        //[Item 1, Item 2]
+        System.out.println(categoryBox.getCheckModel().getCheckedItems());
+
+        //[1, 2]
+        System.out.println(categoryBox.getCheckModel().getCheckedIndices());
 
     }
 }

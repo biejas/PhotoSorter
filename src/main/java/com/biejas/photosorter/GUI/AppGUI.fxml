@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import org.controlsfx.control.CheckComboBox?>
 <AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.biejas.photosorter.AppGUI">
    <children>
       <Button id="start" layoutX="498.0" layoutY="356.0" mnemonicParsing="false" onAction="#startSorting" text="Start" />
@@ -26,6 +27,7 @@
       <VBox id="categories" fx:id="categories" layoutX="32.0" layoutY="116.0" prefHeight="229.0" prefWidth="268.0" spacing="10.0">
          <children>
             <Label text="Categories" />
+            <CheckComboBox fx:id="categoryBox" prefHeight="26.0" prefWidth="268.0"/>
          </children>
       </VBox>
       <VBox layoutX="367.0" layoutY="139.0" prefHeight="200.0" prefWidth="207.0" spacing="10.0">
@@ -36,7 +38,6 @@
                   <ToggleGroup fx:id="leftPhotos" />
                </toggleGroup></RadioButton>
             <RadioButton id="in_place" fx:id="inPlace" mnemonicParsing="false" text="Leave in place" toggleGroup="$leftPhotos" />
-            <RadioButton id="best_fit" fx:id="bestFit" mnemonicParsing="false" text="Put into best fit" toggleGroup="$leftPhotos" />
          </children>
          <opaqueInsets>
             <Insets />
