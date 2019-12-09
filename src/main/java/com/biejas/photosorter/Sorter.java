@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,12 +52,21 @@ public class Sorter {
         return result;
     }
 
-    public void sort(){
-        for (File photo : photos){
-            System.out.println("Sorting started...");
-            CategorizedFile categorized = new CategorizedFile(photo);
-            categorized.categorize(threshold);
-            categorizedPhotos.add(categorized);
+    public void sort() throws IOException {
+//        for (File photo : photos){
+//            System.out.println("Sorting started...");
+//            CategorizedFile categorized = new CategorizedFile(photo);
+//            categorized.categorize(threshold);
+//            categorizedPhotos.add(categorized);
+//        }
+        Categories.annotatePhotosInBatch(photos, threshold, categorizedPhotos);
+        for(CategorizedFile cf : categorizedPhotos){
+            String dirNameForPhoto = cf.getTopCategory().getName();
+            File dirForPhoto = new File(dirPath.concat("/"+dirNameForPhoto));
+            if(!dirForPhoto.exists()){
+                dirForPhoto.mkdir();
+            }
+            Files.move(Paths.get(cf.getFile().getCanonicalPath()), Paths.get(dirForPhoto.getCanonicalPath().concat("/"+cf.getFile().getName())));
         }
     }
 }

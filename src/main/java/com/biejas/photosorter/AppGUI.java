@@ -14,6 +14,8 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class AppGUI extends Application {
     Stage stage;
@@ -56,7 +58,12 @@ public class AppGUI extends Application {
 
     @FXML
     private void startSorting(ActionEvent event){
-
+        try {
+            Sorter sorter = new Sorter(folderPath.getText(), Integer.parseInt(threshold.getText()));
+            sorter.sort();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
