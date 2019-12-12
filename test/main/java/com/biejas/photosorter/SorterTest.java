@@ -37,14 +37,36 @@ class SorterTest {
         assertFalse(sorter.getFoundCategories().isEmpty());
     }
 
+    void shouldReturnTrueAfterFindingCategories(){
+        sorter.findCategories();
+        assertEquals(Categories.getCategory("Dog").getName(), "Dog");
+    }
 
     @Test
-    void shouldReturnTrueAfterSorting() throws IOException {
+    void shouldReturnTrueAfterSorting() {
+            try{
+            sorter.findCategories();
+            sorter.addChosenCategory(Categories.getCategory("Dog"));
+            sorter.sort();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         assertTrue(new File("./test-sets/set1/Dog").exists());
     }
 
     @Test
-    void shouldReturnFalseAfterSorting() throws IOException {
+    void shouldReturnFalseAfterSorting() {
+    try{
+        sorter.findCategories();
+        sorter.addChosenCategory(Categories.getCategory("Dog"));
+        sorter.sort();
+    } catch (FileNotFoundException e) {
+        e.printStackTrace();
+        } catch (IOException e) {
+        e.printStackTrace();
+        }
         assertFalse(new File("./test-sets/set1/Cat").exists());
     }
 
