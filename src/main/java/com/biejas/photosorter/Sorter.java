@@ -61,12 +61,6 @@ public class Sorter {
     }
 
     public void sort() throws IOException {
-//        for (File photo : photos){
-//            System.out.println("Sorting started...");
-//            CategorizedFile categorized = new CategorizedFile(photo);
-//            categorized.categorize(threshold);
-//            categorizedPhotos.add(categorized);
-//        }
         if(strategy=="other"){
             File otherDir = new File(dirPath.concat("/Other"));
             if(!otherDir.exists()){

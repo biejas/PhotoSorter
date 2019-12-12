@@ -11,26 +11,26 @@
 <?import javafx.scene.text.Font?>
 
 <?import org.controlsfx.control.CheckComboBox?>
-<AnchorPane fx:id="anchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.biejas.photosorter.AppGUI">
+
+<AnchorPane fx:id="anchorPane" prefHeight="260.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.com.biejas.photosorter.AppGUI">
    <children>
-      <Button id="start" layoutX="498.0" layoutY="356.0" mnemonicParsing="false" onAction="#startSorting" text="Start" />
-      <Button id="find_category" layoutX="367.0" layoutY="356.0" mnemonicParsing="false" onAction="#findsCategories" text="Find category" />
+      <Button id="start" layoutX="524.0" layoutY="212.0" mnemonicParsing="false" onAction="#startSorting" text="Start" />
       <Label layoutX="32.0" layoutY="14.0" text="PhotoSorter">
          <font>
             <Font size="40.0" />
          </font>
       </Label>
-      <TextField id="path" fx:id="folderPath" layoutX="120.0" layoutY="63.0" prefHeight="26.0" prefWidth="350.0" promptText="Path" />
-      <TextField id="threshold" fx:id="threshold" layoutX="489.0" layoutY="107.0" prefHeight="26.0" prefWidth="80.0" promptText="In %" />
-      <Label layoutX="32.0" layoutY="68.0" text="Folder Path" />
-      <Label layoutX="367.0" layoutY="112.0" text="Threshold" />
-      <VBox id="categories" fx:id="categories" layoutX="32.0" layoutY="116.0" prefHeight="229.0" prefWidth="268.0" spacing="10.0">
+      <TextField id="path" fx:id="folderPath" layoutX="125.0" layoutY="73.0" prefHeight="26.0" prefWidth="350.0" promptText="Path" />
+      <TextField id="threshold" fx:id="threshold" layoutX="125.0" layoutY="113.0" prefHeight="26.0" prefWidth="80.0" promptText="0-100" />
+      <Label layoutX="37.0" layoutY="78.0" text="Folder Path" />
+      <Label layoutX="37.0" layoutY="118.0" text="Threshold" />
+      <VBox id="categories" fx:id="categories" layoutX="37.0" layoutY="152.0" prefHeight="60.0" prefWidth="268.0" spacing="10.0">
          <children>
-            <Label text="Categories" />
+            <Button id="find_category" mnemonicParsing="false" onAction="#findsCategories" text="Find category" />
             <CheckComboBox fx:id="categoryBox" prefHeight="26.0" prefWidth="268.0"/>
          </children>
       </VBox>
-      <VBox layoutX="367.0" layoutY="139.0" prefHeight="200.0" prefWidth="207.0" spacing="10.0">
+      <VBox layoutX="367.0" layoutY="118.0" prefHeight="83.0" prefWidth="207.0" spacing="10.0">
          <children>
             <Label text="Not sorted files" />
             <RadioButton id="others" fx:id="others" mnemonicParsing="false" text="Put into folder Others">
@@ -43,6 +43,6 @@
             <Insets />
          </opaqueInsets>
       </VBox>
-      <Button layoutX="489.0" layoutY="63.0" mnemonicParsing="false" onAction="#getDir" text="Find path" />
+      <Button layoutX="494.0" layoutY="73.0" mnemonicParsing="false" onAction="#getDir" text="Find path" />
    </children>
 </AnchorPane>
