@@ -33,7 +33,7 @@ class SorterTest {
     }
 
     @Test
-    void shouldNotBeEmpty(){
+    void foundShouldNotBeEmpty(){
         assertFalse(sorter.getFoundCategories().isEmpty());
     }
 
