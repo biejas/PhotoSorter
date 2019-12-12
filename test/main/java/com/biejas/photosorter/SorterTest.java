@@ -1,8 +1,6 @@
 package main.java.com.biejas.photosorter;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,32 +12,35 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SorterTest {
 
-    private Sorter sorter;
+    private static Sorter sorter;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void setUp() {
         try {
-            Sorter sorter = new Sorter("./main/java/com/biejas/photosorter/testset1", 98);
+           sorter = new Sorter("./test-sets/set1", 98, "inplace");
+           sorter.findCategories();
+           sorter.addChosenCategory(Categories.getCategory("Dog"));
+           sorter.sort();
         } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @AfterEach
-    void tearDown() {
+    @AfterAll
+    static void tearDown() {
     }
 
 
     @Test
     void shouldReturnTrueAfterSorting() throws IOException {
-        sorter.sort();
-        assertTrue(new File("./main/java/com/biejas/photosorter/testset1/Dog").exists());
+        assertTrue(new File("./test-sets/set1/Dog").exists());
     }
 
     @Test
     void shouldReturnFalseAfterSorting() throws IOException {
-        sorter.sort();
-        assertFalse(new File("./main/java/com/biejas/photosorter/testset1/Cat").exists());
+        assertFalse(new File("./test-sets/set1/Cat").exists());
     }
 
 }
