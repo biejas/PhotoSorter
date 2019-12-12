@@ -36,5 +36,9 @@ public class CategorizedFile {
     public Category getTopCategory() {
         return topCategory;
     }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
 }
 

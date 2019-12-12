@@ -1,5 +1,8 @@
 package main.java.com.biejas.photosorter;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,10 +18,15 @@ public class Sorter {
     private final File dir;
     private final File[] photos;
     private final List<CategorizedFile> categorizedPhotos = new ArrayList<>();
-    private final Integer threshold;
+    private Integer threshold;
+    private String strategy;
+    private final ObservableList<Category> foundCategories = FXCollections.observableArrayList();
+    private final List<Category> chosenCategories = new ArrayList<>();
 
-    public Sorter(String dirPath, Integer threshold) throws FileNotFoundException {
+
+    public Sorter(String dirPath, Integer threshold, String strategy) throws FileNotFoundException {
         this.threshold = threshold;
+        this.strategy = strategy;
         this.dirPath = dirPath;
         this.dir = new File(dirPath);
 
@@ -59,14 +67,63 @@ public class Sorter {
 //            categorized.categorize(threshold);
 //            categorizedPhotos.add(categorized);
 //        }
-        Categories.annotatePhotosInBatch(photos, threshold, categorizedPhotos);
+        if(strategy=="other"){
+            File otherDir = new File(dirPath.concat("/Other"));
+            if(!otherDir.exists()){
+                otherDir.mkdir();
+            }
+        }
+        for(Category c : chosenCategories){
+            File newDir = new File(dirPath.concat("/"+c.getName()));
+            if(!newDir.exists()){
+                newDir.mkdir();
+            }
+        }
         for(CategorizedFile cf : categorizedPhotos){
             String dirNameForPhoto = cf.getTopCategory().getName();
             File dirForPhoto = new File(dirPath.concat("/"+dirNameForPhoto));
             if(!dirForPhoto.exists()){
-                dirForPhoto.mkdir();
+                switch (strategy){
+                    case "other":
+                        Files.move(Paths.get(cf.getFile().getCanonicalPath()), Paths.get(dirPath.concat("/Other/"+cf.getFile().getName())));
+                    case "inplace":
+                        System.out.println("not moving file" + cf.getFile().getName());
+                }
+            }else{
+                Files.move(Paths.get(cf.getFile().getCanonicalPath()), Paths.get(dirForPhoto.getCanonicalPath().concat("/"+cf.getFile().getName())));
             }
-            Files.move(Paths.get(cf.getFile().getCanonicalPath()), Paths.get(dirForPhoto.getCanonicalPath().concat("/"+cf.getFile().getName())));
         }
+    }
+
+    public void findCategories(){
+        foundCategories.clear();
+        Categories.annotatePhotosInBatch(photos, threshold, categorizedPhotos);
+        for(CategorizedFile cf : categorizedPhotos){
+            for(Category c : cf.getCategories()){
+                addNewFoundCategory(c);
+            }
+        }
+    }
+
+    public ObservableList<Category> getFoundCategories() {
+        return foundCategories;
+    }
+
+    private void addNewFoundCategory(Category c) {
+        if(!foundCategories.contains(c)){
+            foundCategories.add(c);
+        }
+    }
+
+    public void addChosenCategory(Category c){
+        chosenCategories.add(c);
+    }
+
+    public void setThreshold(Integer threshold) {
+        this.threshold = threshold;
+    }
+
+    public void setStrategy(String strategy) {
+        this.strategy = strategy;
     }
 }
