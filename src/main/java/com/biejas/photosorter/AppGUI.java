@@ -18,7 +18,9 @@ import javafx.stage.Stage;
 import org.controlsfx.control.CheckComboBox;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 public class AppGUI extends Application {
     Stage stage;
@@ -34,6 +36,8 @@ public class AppGUI extends Application {
 
     private @FXML VBox categories;
     private @FXML CheckComboBox<Category> categoryBox;
+
+    private Sorter sorter = null;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -61,8 +65,12 @@ public class AppGUI extends Application {
 
     @FXML
     private void startSorting(ActionEvent event){
+        System.out.println(categoryBox.getCheckModel().getCheckedItems());
+        List<Category> checkedCategories = categoryBox.getCheckModel().getCheckedItems();
+        for(Category c : checkedCategories){
+            sorter.addChosenCategory(c);
+        }
         try {
-            Sorter sorter = new Sorter(folderPath.getText(), Integer.parseInt(threshold.getText()));
             sorter.sort();
         } catch (IOException e) {
             e.printStackTrace();
@@ -71,18 +79,20 @@ public class AppGUI extends Application {
 
     @FXML
     private void findsCategories(ActionEvent event){
-        ObservableList<Category> categoryObservableList = FXCollections.observableArrayList(); //podmien na wywolanie funkcji
-
+        String strategy = "";
+        if(others.isSelected()){
+            strategy = "other";
+        }else if(inPlace.isSelected()){
+            strategy = "inplace";
+        }
+        try {
+            sorter = new Sorter(folderPath.getText(), Integer.parseInt(threshold.getText()), strategy);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        sorter.findCategories();
+        ObservableList<Category> categoryObservableList = sorter.getFoundCategories();
         categoryBox.getItems().addAll(categoryObservableList);
-
-        //Jak chcesz otrzymac zaznaczone boxy z listy
-        //Dwa sposoby i co zwrócą:
-
-        //[Item 1, Item 2]
-        System.out.println(categoryBox.getCheckModel().getCheckedItems());
-
-        //[1, 2]
-        System.out.println(categoryBox.getCheckModel().getCheckedIndices());
-
+        System.out.println("annotating files and finding categories finished");
     }
 }
