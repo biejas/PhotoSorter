@@ -12,24 +12,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SorterTest {
 
-   // private static Sorter sorter;
+    private static Sorter sorter;
 
     @BeforeAll
     static void setUp() {
-//        try {
-//           sorter = new Sorter("./test-sets/set1", 98, "inplace");
-//           sorter.findCategories();
-//           sorter.addChosenCategory(Categories.getCategory("Dog"));
-//           sorter.sort();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+           sorter = new Sorter("./test-sets/set1", 98, "inplace");
+           sorter.findCategories();
+           sorter.addChosenCategory(Categories.getCategory("Dog"));
+           sorter.sort();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @AfterAll
     static void tearDown() {
+    }
+
+    @Test
+    void shouldNotBeEmpty(){
+        assertFalse(sorter.getFoundCategories().isEmpty());
     }
 
 
